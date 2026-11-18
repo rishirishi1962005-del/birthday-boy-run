@@ -2864,11 +2864,11 @@ window.Sfx = (() => {
 
   // Keep the internal 16:9 canvas crisp while CSS scales it.
   function fitCanvas() {
-    const dpr=touchUI?Math.min(window.devicePixelRatio||1,1.1):Math.min(window.devicePixelRatio||1,2);
+    const dpr=touchUI?Math.min(window.devicePixelRatio||1,1.7):Math.min(window.devicePixelRatio||1,2);
     const rect=canvas.getBoundingClientRect();
-    const targetW=Math.round(rect.width*dpr), targetH=Math.round(rect.width*9/16*dpr);
+    const targetW=Math.round(touchUI?Math.min(rect.width*dpr,1180):rect.width*dpr), targetH=Math.round(targetW*9/16);
     if(canvas.width!==targetW||canvas.height!==targetH){canvas.width=targetW;canvas.height=targetH;}
-    ctx.setTransform(canvas.width/W,0,0,canvas.height/H,0,0);ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality=touchUI?"low":"high";
+    ctx.setTransform(canvas.width/W,0,0,canvas.height/H,0,0);ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality=touchUI?"medium":"high";
   }
   const resizeObserver = new ResizeObserver(fitCanvas);
   resizeObserver.observe(canvas);
